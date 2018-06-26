@@ -1,0 +1,183 @@
+// 百度地图API功能
+var map = new BMap.Map("baiduMap");            // 创建Map实例
+//map.centerAndZoom("西安",14);                   // 初始化地图,设置城市和地图级别。
+map.addControl(new BMap.NavigationControl());  //添加默认缩放平移控件
+map.addControl(new BMap.MapTypeControl({mapTypes: [BMAP_NORMAL_MAP,BMAP_HYBRID_MAP]}));     //2D图，卫星图
+map.addControl(new BMap.MapTypeControl({anchor: BMAP_ANCHOR_TOP_RIGHT}));    //左上角，默认地图控件
+map.enableScrollWheelZoom();    //启用滚轮放大缩小，默认禁用
+map.enableContinuousZoom();    //启用地图惯性拖拽，默认禁用
+map.enableKeyboard();	//启用键盘上下左右键移动地图
+map.setDefaultCursor("auto");  //设置鼠标形状
+var stCtrl = new BMap.PanoramaControl(); //构造全景控件
+stCtrl.setOffset(new BMap.Size(10, 40));	//全景地图控件位置
+map.addControl(stCtrl);//添加全景控件
+
+
+
+
+var myCityName = "宝鸡";						//定义当前城市
+var offsetCoordinate;
+function getOffset(){		//此模块功能为先取得所在城市名,然后根据城市名解析 对应的经纬度,在根据经纬度计算出此区域的经纬度偏置
+
+	function getCityFun(result){					//此函数功能为取得城市的名称
+		myCityName = result.name;			//取得名称并赋值给全局变量 myCityName
+		//console.debug(myCityName);
+
+		map.centerAndZoom(myCityName,14);                   // 初始化地图,设置城市和地图级别。
+
+		function nameToCoordinate(cityName){
+		// 创建地址解析器实例
+		var myGeo = new BMap.Geocoder();
+		myGeo.getPoint(cityName, function(point){		//根据地名解析为百度经纬度
+			if (point) {
+				get_Offset(point.lng,point.lat);			//调用get_Offset() 函数计算经纬度偏置并保存在全局变量offSet数组中
+				
+			}else{
+				alert("您选择地址没有解析到结果!");
+			}
+		}, "西安市");
+		}
+		nameToCoordinate(myCityName);		//调用对象的get方法获得城市名称	
+
+
+	}
+	var myCity = new BMap.LocalCity();		//初始化百度地图取得城市名称的对象
+	myCity.get(getCityFun);						//调用对象的get方法获得城市名称	
+}
+getOffset();
+
+
+
+
+
+var mouseLng;									//鼠标所处位置的经度	
+var mouseLat;									//鼠标所处位置的纬度	
+map.addEventListener("mousemove",function(e){			//鼠标移动时在表格上显示经纬度    offSet为百度经纬度偏置
+	mouseLng=(e.point.lng + offSet[0]).toFixed(9);				
+	mouseLat=(e.point.lat + offSet[1]).toFixed(9);
+	$("#mouseCoordinate").text(mouseLng+","+mouseLat);
+	});	
+
+
+map.addEventListener("click",function(e){			//鼠标点击时在表格上显示经纬度   offSet 为百度经纬度偏置
+	mouseLng=(e.point.lng + offSet[0]).toFixed(9);	
+	mouseLat=(e.point.lat + offSet[1]).toFixed(9);
+	$("#pointXY").attr("value", mouseLng+","+mouseLat);
+	});
+
+// map.addEventListener("zoomend",Auto_Mymarkers);						//设置缩放事件监听器
+// map.addEventListener("moveend",Auto_Mymarkers);						//设置地图移动事件监听器
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+			
+var divOpacityFlag=1;										//divOpacity()函数功能为修改一个图层的透明度并设置开关,无返回值.
+function  divOpacity(divElement,Opacity_1,Opacity_2){		//第一个参数为jQuery的选择器,第二个和三个参数为两个透明度值		
+		var Opacity1=0.8,Opacity2=0.25;
+		if(arguments.length=3){
+			Opacity1=Opacity_1;
+			Opacity2=Opacity_2;
+		}
+		else if(arguments.length=2){
+			Opacity1=Opacity_1;
+		};
+															//默认的	透明度为0.8和0.25
+		if (!divOpacityFlag) {
+	 		$(divElement).css("opacity",Opacity2); 		//改变元素的透明度
+	 		divOpacityFlag=1;
+ 		}
+ 		else{
+	  		$(divElement).css("opacity",Opacity1);			//改变元素的透明度
+	  		divOpacityFlag=0;
+ 		}	
+};
+
+
+
+
+$(function(){
+		$($("#baiduMap>div")[1]).css("display","none");	//屏蔽实景地图logo
+});
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// $("div")   //获取所有div对象 值为jQuery对象数组
+// $("div")[2]		//获取所有div的对象数组,  [2]为数组对象的第三个元素  值为dom对象
+// $($("div")[2])		//获取所有div的对象数组,  [2]为数组对象的第三个元素  值为dom对象 并把这个dom对象转换为jQuery对象
+
+// $($("div")[2]).css("display","none")		//获取所有div的对象数组,  [2]为数组对象的第三个元素  值为dom对象 并把这个dom对象转换为jQuery对象 对此jQuery对象设置css样式.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,64 @@
+div,td,span{
+	margin: 0px;
+	padding: 0px;
+	border:0px;
+	border-color:#fff;
+	border-style: solid;
+	border-radius: 4px;
+	border:0px;
+	font-size: 13px;
+	font-style: normal;
+	font-family: "微软雅黑";
+	text-align: center;
+	vertical-align: middle;
+	text-indent: 
+	text-decoration:none;
+	background-color: #555;
+}
+
+.g-main{
+	width: 1100px;
+	/*height: 600px;*/
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+.clearfloat {						/* 清除浮动float效果	 */
+   	 content: ".";
+   	 visibility: hidden;
+   	 display: block;
+   	 clear: both;
+} 
+
+
+.borderBox,div{							/*设置盒模型为内容包含border padding margin 的宽度*/
+     -moz-box-sizing: border-box;  /*Firefox3.5+*/
+     -webkit-box-sizing: border-box; /*Safari3.2+*/
+     -o-box-sizing: border-box; /*Opera9.6*/
+     -ms-box-sizing: border-box; /*IE8*/
+     box-sizing: border-box; /*W3C标准(IE9+，Safari5.1+,Chrome10.0+,Opera10.6+都符合box-sizing的w3c标准语法)*/
+  }
